@@ -81,9 +81,6 @@ void testAplyModelGray()
         aam::AAMEstimator estimator;
         estimator.load("data/aam_ic_test.xml");
         
-        aam::TrainModelLoader loader;
-        loader.useGrayImages(true);
-
         cv::CascadeClassifier cascadeFace(
             "data/haarcascade_frontalface_alt.xml");
         cv::CascadeClassifier cascadeEyes(
@@ -108,12 +105,9 @@ void testAplyModelGray()
         //cv::Mat im = cv::imread("data/IMM/01-1m.jpg");
 //        cv::Mat im = cv::imread(
 //                "/home/ivan/Документы/databases/CUAVE/cuavebmp/frames/s19f.bmp");
-        aam::TrainModelInfo info;
-        info.setImage(im, true);
 
         std::vector<cv::Rect> faces;
-        cv::Mat1b detectImage;
-        cv::cvtColor(im, detectImage, CV_BGR2GRAY);
+        cv::cvtColor(im, im, CV_BGR2GRAY);
         cascadeFace.detectMultiScale(im, faces,
             1.1, 2, 0
             |CV_HAAR_FIND_BIGGEST_OBJECT
@@ -128,43 +122,22 @@ void testAplyModelGray()
             return;
         }
 
-        cv::Rect faceRect = faces[0];
-        cv::Mat eyeRegion = detectImage(cv::Range(faceRect.y,
-                faceRect.y + faceRect.height),
-                cv::Range(faceRect.x, faceRect.x + faceRect.width));
-        std::vector<cv::Rect> eyes;
-
-        cascadeEyes.detectMultiScale(eyeRegion, eyes,
-            1.1, 2, 0
-            //|CV_HAAR_FIND_BIGGEST_OBJECT
-            //|CV_HAAR_DO_ROUGH_SEARCH
-            |CV_HAAR_SCALE_IMAGE
-            ,
-            cv::Size(30, 30) );
-        
-        if (eyes.empty())
-        {
-            //std::cout << "%TEST_FAILED% time=0 testname=testAplyModelGray (aplymodelicTest) message=No eyes found on test picture" << std::endl;
-            //return;
-        }
-
-        cv::Rect r = faceRect;
+        cv::Rect r = faces[0];
         aam::Point2D startPoint(r.x + r.width * 0.5 + 20, r.y +
             r.height * 0.5 + 40);
         aam::Vertices2DList foundPoints;
 
         int64 start = cv::getTickCount();
-        estimator.estimateAAM(info.getImage(), startPoint, foundPoints,
+        estimator.estimateAAM(im, startPoint, foundPoints,
                 true);
         std::cout << "Working time: " << (cv::getTickCount() - start) /
                 cv::getTickFrequency() << std::endl;
 
-        cv::Mat plotImg = info.getImage();
         for (int j = 0; j < foundPoints.size(); j++)
         {
-            cv::circle(plotImg, foundPoints[j], 3, CV_RGB(255, 255, 255));
+            cv::circle(im, foundPoints[j], 3, CV_RGB(255, 255, 255));
         }
-        cv::imshow("test", plotImg);
+        cv::imshow("test", im);
         cv::waitKey(0);
     }
     catch (std::exception& e)
@@ -207,8 +180,6 @@ void testAplyModelColor()
         //cv::Mat im = cv::imread("data/IMM/01-1m.jpg");
 //        cv::Mat im = cv::imread(
 //                "/home/ivan/Документы/databases/CUAVE/cuavebmp/frames/s19f.bmp");
-        aam::TrainModelInfo info;
-        info.setImage(im, false);
 
         std::vector<cv::Rect> faces;
         cv::Mat1b detectImage;
@@ -253,17 +224,16 @@ void testAplyModelColor()
         aam::Vertices2DList foundPoints;
 
         int64 start = cv::getTickCount();
-        estimator.estimateAAM(info.getImage(), startPoint, foundPoints,
+        estimator.estimateAAM(im, startPoint, foundPoints,
                 true);
         std::cout << "Working time: " << (cv::getTickCount() - start) /
                 cv::getTickFrequency() << std::endl;
 
-        cv::Mat plotImg = info.getImage();
         for (int j = 0; j < foundPoints.size(); j++)
         {
-            cv::circle(plotImg, foundPoints[j], 3, CV_RGB(255, 255, 255));
+            cv::circle(im, foundPoints[j], 3, CV_RGB(255, 255, 255));
         }
-        cv::imshow("test", plotImg);
+        cv::imshow("test", im);
         cv::waitKey(0);
     }
     catch (std::exception& e)

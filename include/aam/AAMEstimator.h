@@ -53,11 +53,15 @@ namespace aam
 
         void estimateAAM(const cv::Mat& img,
             const Vertices2DList& initialPoints,
-            Vertices2DList& foundPoints);
+            Vertices2DList& foundPoints,
+            bool verbose = false);
         void estimateAAM(const cv::Mat& img,
             const Point2D& centralPoint,
             Vertices2DList& foundPoints,
             bool verbose = false);
+
+    private:
+        bool checkImage(const cv::Mat& img);
         
     private:
         TrainModelLoader loader;

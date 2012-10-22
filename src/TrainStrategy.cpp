@@ -26,6 +26,18 @@
 namespace aam
 {
     const char *TrainStrategy::AAM_ALGORITHM_TAG = "aam_algorithm";
+    const char *TrainStrategy::AAM_COLOR_CHANNELS_TAG = "aam_color_channels";
+
+    TrainStrategy::TrainStrategy()
+    : colorChannels(0)
+    {
+
+    }
+
+    TrainStrategy::~TrainStrategy()
+    {
+        
+    }
     
     std::auto_ptr<TrainStrategy> TrainStrategy::load(
             const std::string& fileName)
@@ -48,15 +60,22 @@ namespace aam
         
         storage[AAM_ALGORITHM_TAG] >> algType;
 
+        int ch;
+        storage[AAM_COLOR_CHANNELS_TAG] >> ch;
+        if (ch != 1 && ch != 3)
+        {
+            throw InvalidModelFileException();
+        }
+
         switch (algType)
         {
             case algorithm::conventional:
                 trainer = std::auto_ptr<TrainStrategy>(
-                        new TrainConventional());
+                        new TrainConventional(ch));
                 break;
             case algorithm::inverseComposition:
                 trainer = std::auto_ptr<TrainStrategy>(
-                        new TrainIC2D());
+                        new TrainIC2D(ch));
                 break;
             default:
                 throw InvalidModelFileException();
@@ -75,7 +94,7 @@ namespace aam
     }
 
     std::auto_ptr<TrainStrategy> TrainStrategy::create(
-        algorithm::AAMAlgorithm alg)
+        algorithm::AAMAlgorithm alg, int channels)
     {
         std::auto_ptr<TrainStrategy> ptr;
 
@@ -83,16 +102,21 @@ namespace aam
         {
             case algorithm::conventional:
                 ptr = std::auto_ptr<TrainStrategy>(
-                        new TrainConventional());
+                        new TrainConventional(channels));
                 break;
             case algorithm::inverseComposition:
                 ptr = std::auto_ptr<TrainStrategy>(
-                        new TrainIC2D());
+                        new TrainIC2D(channels));
                 break;
             default:
                 throw InternalException();
         }
 
         return ptr;
+    }
+
+    int TrainStrategy::getColorChannels()
+    {
+        return this->colorChannels;
     }
 }

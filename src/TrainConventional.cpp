@@ -29,8 +29,9 @@
 
 namespace aam
 {
-    TrainConventional::TrainConventional()
+    TrainConventional::TrainConventional(int channels)
     {
+        this->colorChannels = channels;
     }
 
     TrainConventional::~TrainConventional()
@@ -104,6 +105,7 @@ namespace aam
     void TrainConventional::save(cv::FileStorage& storage)
     {
         storage << AAM_ALGORITHM_TAG << getTrainerType();
+        storage << AAM_COLOR_CHANNELS_TAG << getColorChannels();
         this->modelData.save(storage);
     }
 

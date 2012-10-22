@@ -34,7 +34,7 @@ namespace aam
     class TrainConventional : public TrainStrategy
     {
     public:
-        TrainConventional();
+        TrainConventional(int channels);
         virtual ~TrainConventional();
         
         virtual void train(std::vector<TrainModelInfo>& trainData);

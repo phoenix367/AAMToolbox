@@ -67,6 +67,8 @@ namespace aam
             cv::Mat1i& warpMap);
         static RealType procrustes(const Vertices2DList& X,
             const Vertices2DList& Y, Vertices2DList& Z);
+        static bool convertImage(const cv::Mat& srcImage,
+            cv::Mat& cvtImage, bool toGrayScale);
 
     private:
         static bool triPred(const cv::Rect& r, const cv::Vec6f& t);

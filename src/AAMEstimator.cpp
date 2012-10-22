@@ -28,6 +28,7 @@
 #include "aam/AAMEstimator.h"
 #include "aam/AAMFunctions2D.h"
 #include "aam/vector_op.h"
+#include "aam/CommonFunctions.h"
 
 namespace aam
 {
@@ -42,8 +43,11 @@ namespace aam
     void AAMEstimator::train(const std::vector<ModelPathType>& modelsList)
     {
         this->loader.clear();
+        
+        // We select graysale or BGR images to train
+        int ch = (this->options.isGrayscale()) ? 1 : 3;
         this->trainStrategy = TrainStrategy::create(
-                this->options.getAAMAlgorithm());
+                this->options.getAAMAlgorithm(), ch);
 
         if (!this->trainStrategy.get())
         {
@@ -109,17 +113,25 @@ namespace aam
 
     void AAMEstimator::estimateAAM(const cv::Mat& img,
             const Vertices2DList& initialPoints,
-            Vertices2DList& foundPoints)
+            Vertices2DList& foundPoints,
+            bool verbose)
     {
-        if (this->trainStrategy.get())
-        {
-            this->trainStrategy->estimateAAM(img, initialPoints,
-                    foundPoints);
-        }
-        else
+        if (!this->trainStrategy.get())
         {
             throw NotInitializedException();
         }
+        
+        if (!checkImage(img))
+        {
+            throw InvalidArgumentException();
+        }
+
+        cv::Mat cvtImg;
+        CommonFunctions::convertImage(img, cvtImg,
+                this->trainStrategy->getColorChannels() == 1);
+
+        this->trainStrategy->estimateAAM(cvtImg, initialPoints,
+                foundPoints, verbose);
     }
 
     void AAMEstimator::estimateAAM(const cv::Mat& img,
@@ -127,14 +139,42 @@ namespace aam
             Vertices2DList& foundPoints,
             bool verbose)
     {
-        if (this->trainStrategy.get())
-        {
-            this->trainStrategy->estimateAAM(img, centralPoint,
-                    foundPoints, verbose);
-        }
-        else
+        if (!this->trainStrategy.get())
         {
             throw NotInitializedException();
         }
+
+        if (!checkImage(img))
+        {
+            throw InvalidArgumentException();
+        }
+
+        cv::Mat cvtImg;
+        CommonFunctions::convertImage(img, cvtImg,
+                this->trainStrategy->getColorChannels() == 1);
+
+        this->trainStrategy->estimateAAM(cvtImg, centralPoint,
+                foundPoints, verbose);
+    }
+
+    bool AAMEstimator::checkImage(const cv::Mat& img)
+    {
+        if (!this->trainStrategy.get())
+        {
+            return false;
+        }
+
+        int channels = this->trainStrategy->getColorChannels();
+        if (channels == 1 && (img.channels() == 1 || img.channels() == 3))
+        {
+            return true;
+        }
+
+        if (channels == 3 && img.channels() == 3)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

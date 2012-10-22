@@ -28,8 +28,9 @@
 
 namespace aam
 {
-    TrainIC2D::TrainIC2D()
+    TrainIC2D::TrainIC2D(int channels)
     {
+        this->colorChannels = channels;
     }
 
     TrainIC2D::~TrainIC2D()
@@ -70,6 +71,7 @@ namespace aam
     void TrainIC2D::save(cv::FileStorage& storage)
     {
         storage << AAM_ALGORITHM_TAG << getTrainerType();
+        storage << AAM_COLOR_CHANNELS_TAG << getColorChannels();
         this->model.save(storage);
     }
 

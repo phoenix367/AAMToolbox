@@ -57,7 +57,6 @@ void testAplyGray()
 
         //model.load("data/aam_test.xml");
 
-        aam::TrainModelInfo info;
         //cv::Mat im = cv::imread("data/IMM/01-1m.jpg");
         cv::Mat im = cv::imread("data/cootes/107_0766.bmp");
 
@@ -68,11 +67,10 @@ void testAplyGray()
         }
 
         cv::Mat gray;
-        cv::cvtColor(im, gray, CV_BGR2GRAY);
-        cv::equalizeHist(gray, gray);
+        cv::cvtColor(im, im, CV_BGR2GRAY);
 
         std::vector<cv::Rect> faces;
-        cascade.detectMultiScale(gray, faces,
+        cascade.detectMultiScale(im, faces,
             1.1, 2, 0
             |CV_HAAR_FIND_BIGGEST_OBJECT
             //|CV_HAAR_DO_ROUGH_SEARCH
@@ -87,19 +85,12 @@ void testAplyGray()
         }
 
         cv::Rect faceRect = faces[0];
-        //double scale = faceRect.width / 250.0;
-        double scale = 1;
-        cv::Mat scaledImage;
-        cv::resize(im, scaledImage, cv::Size(im.cols / scale ,
-                im.rows / scale));
         
-        info.setImage(scaledImage, true);
-
         aam::Point2D cp;
         cp.x = cvRound(
-                (faceRect.x + faceRect.width * 0.5) / scale + 10);
+                (faceRect.x + faceRect.width * 0.5) + 10);
         cp.y = cvRound(
-                (faceRect.y + faceRect.height * 0.5) / scale + 30);
+                (faceRect.y + faceRect.height * 0.5) + 30);
 
         aam::Vertices2DList pos;
         aam::TrainOptions options = estimator.getTrainOptions();
@@ -107,17 +98,16 @@ void testAplyGray()
         estimator.setTrainOptions(options);
         
         uint64 start = cv::getTickCount();
-        estimator.estimateAAM(info.getImage(), cp, pos, true);
+        estimator.estimateAAM(im, cp, pos, true);
 
         std::cout << "Working time " << (cv::getTickCount() -
                 start) / cv::getTickFrequency() << std::endl;
 
-        cv::Mat img = info.getImage().clone();
         for (int i = 0; i < pos.size(); i++)
         {
-            cv::circle(img, pos[i], 3, CV_RGB(255, 255, 255));
+            cv::circle(im, pos[i], 3, CV_RGB(255, 255, 255));
         }
-        cv::imshow("result", img);
+        cv::imshow("result", im);
         cv::waitKey(0);
     }
     catch (std::exception& e)
@@ -144,9 +134,6 @@ void testAplyColor()
             return;
         }
 
-        //model.load("data/aam_test.xml");
-
-        aam::TrainModelInfo info;
         //cv::Mat im = cv::imread("data/IMM/01-1m.jpg");
         cv::Mat im = cv::imread("data/cootes/107_0766.bmp");
 
@@ -156,12 +143,8 @@ void testAplyColor()
             return;
         }
 
-        cv::Mat gray;
-        cv::cvtColor(im, gray, CV_BGR2GRAY);
-        cv::equalizeHist(gray, gray);
-
         std::vector<cv::Rect> faces;
-        cascade.detectMultiScale(gray, faces,
+        cascade.detectMultiScale(im, faces,
             1.1, 2, 0
             |CV_HAAR_FIND_BIGGEST_OBJECT
             //|CV_HAAR_DO_ROUGH_SEARCH
@@ -176,19 +159,12 @@ void testAplyColor()
         }
 
         cv::Rect faceRect = faces[0];
-        //double scale = faceRect.width / 250.0;
-        double scale = 1;
-        cv::Mat scaledImage;
-        cv::resize(im, scaledImage, cv::Size(im.cols / scale ,
-                im.rows / scale));
-
-        info.setImage(scaledImage, false);
 
         aam::Point2D cp;
         cp.x = cvRound(
-                (faceRect.x + faceRect.width * 0.5) / scale + 10);
+                (faceRect.x + faceRect.width * 0.5)  + 10);
         cp.y = cvRound(
-                (faceRect.y + faceRect.height * 0.5) / scale + 30);
+                (faceRect.y + faceRect.height * 0.5)  + 30);
 
         aam::Vertices2DList pos;
         aam::TrainOptions options = estimator.getTrainOptions();
@@ -196,17 +172,16 @@ void testAplyColor()
         estimator.setTrainOptions(options);
 
         uint64 start = cv::getTickCount();
-        estimator.estimateAAM(info.getImage(), cp, pos, true);
+        estimator.estimateAAM(im, cp, pos, true);
 
         std::cout << "Working time " << (cv::getTickCount() -
                 start) / cv::getTickFrequency() << std::endl;
 
-        cv::Mat img = info.getImage().clone();
         for (int i = 0; i < pos.size(); i++)
         {
-            cv::circle(img, pos[i], 3, CV_RGB(255, 255, 255));
+            cv::circle(im, pos[i], 3, CV_RGB(255, 255, 255));
         }
-        cv::imshow("result", img);
+        cv::imshow("result", im);
         cv::waitKey(0);
     }
     catch (std::exception& e)

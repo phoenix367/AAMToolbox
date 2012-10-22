@@ -34,7 +34,7 @@ namespace aam
     class TrainIC2D : public TrainStrategy
     {
     public:
-        TrainIC2D();
+        TrainIC2D(int channels);
         virtual ~TrainIC2D();
 
         virtual void train(std::vector<TrainModelInfo>& trainData);
@@ -46,7 +46,7 @@ namespace aam
         virtual void estimateAAM(const cv::Mat& img,
             const Point2D& centralPoint,
             Vertices2DList& foundPoints, bool verbose = false);
-
+        
     protected:
         virtual void load(cv::FileStorage& storage);
         

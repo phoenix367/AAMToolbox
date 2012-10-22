@@ -34,11 +34,12 @@
 
 namespace aam
 {
-    class TrainOptions;
-    
     class TrainStrategy
     {
     public:
+        TrainStrategy();
+        virtual ~TrainStrategy();
+
         virtual void train(std::vector<TrainModelInfo>& trainData) = 0;
         virtual void save(cv::FileStorage& storage) = 0;
         virtual algorithm::AAMAlgorithm getTrainerType() = 0;
@@ -48,12 +49,12 @@ namespace aam
         virtual void estimateAAM(const cv::Mat& img,
             const Point2D& centralPoint,
             Vertices2DList& foundPoints, bool verbose = false) = 0;
-
+        int getColorChannels();
         
         static std::auto_ptr<TrainStrategy> load(
             const std::string& fileName);
         static std::auto_ptr<TrainStrategy> create(
-            algorithm::AAMAlgorithm alg);
+            algorithm::AAMAlgorithm alg, int channels);
 
         void setOptions(const TrainOptions& newOptions);
 
@@ -62,9 +63,11 @@ namespace aam
 
     protected:
         TrainOptions options;
+        int colorChannels;
 
     protected:
         static const char *AAM_ALGORITHM_TAG;
+        static const char *AAM_COLOR_CHANNELS_TAG;
     };
 }
 

@@ -77,43 +77,9 @@ namespace aam
 
     void TrainModelInfo::setImage(const cv::Mat& im, bool setGrayScale)
     {
-        cv::Mat cvtImage;
-
-        if (setGrayScale)
+        if (!CommonFunctions::convertImage(im, this->image, setGrayScale))
         {
-            cv::cvtColor(im, cvtImage, CV_BGR2GRAY);
-        }
-        else
-        {
-            cvtImage = im;
-        }
-        
-        switch (cvtImage.type())
-        {
-            case CV_8UC1:
-                this->image = RealMatrix(cvtImage) / 255.0;
-                break;
-            case CV_8UC3:
-                this->image = ColorMatrix(cvtImage) / 255.0;
-                break;
-            case CV_8UC4:
-                break;
-            case CV_16UC1:
-                this->image = RealMatrix(cvtImage) / 16535.0;
-                break;
-            case CV_16UC3:
-                this->image = ColorMatrix(cvtImage) / 16535.0;
-                break;
-            case CV_32FC1:
-            case CV_64FC1:
-                this->image = RealMatrix(cvtImage);
-                break;
-            case CV_32FC3:
-            case CV_64FC3:
-                this->image = ColorMatrix(cvtImage);
-                break;
-            default:
-                throw InvalidImageFormat();
+            throw InvalidImageFormat();
         }
     }
 

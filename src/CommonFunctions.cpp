@@ -684,4 +684,51 @@ namespace aam
         eigenVectors = pc;
         eigenValues = neiv;
     }
+
+    bool CommonFunctions::convertImage(const cv::Mat& srcImage,
+            cv::Mat& cvtImage, bool toGrayScale)
+    {
+        cv::Mat tmp;
+
+        assert(srcImage.channels() == 1 || srcImage.channels() == 3);
+
+        if (toGrayScale && srcImage.channels() == 3)
+        {
+            cv::cvtColor(srcImage, tmp, CV_BGR2GRAY);
+        }
+        else
+        {
+            tmp = srcImage;
+        }
+
+        switch (tmp.type())
+        {
+            case CV_8UC1:
+                cvtImage = RealMatrix(tmp) / 255.0;
+                break;
+            case CV_8UC3:
+                cvtImage = ColorMatrix(tmp) / 255.0;
+                break;
+            case CV_8UC4:
+                break;
+            case CV_16UC1:
+                cvtImage = RealMatrix(tmp) / 16535.0;
+                break;
+            case CV_16UC3:
+                cvtImage = ColorMatrix(tmp) / 16535.0;
+                break;
+            case CV_32FC1:
+            case CV_64FC1:
+                cvtImage = RealMatrix(tmp);
+                break;
+            case CV_32FC3:
+            case CV_64FC3:
+                cvtImage = ColorMatrix(tmp);
+                break;
+            default:
+                return false;
+        }
+
+        return true;
+    }
 }
