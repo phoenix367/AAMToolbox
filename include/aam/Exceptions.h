@@ -99,6 +99,11 @@ namespace aam
         {
         }
 
+        InternalException(const std::string& msg) throw()
+        : AAMException(msg)
+        {
+        }
+
         virtual ~InternalException() throw()
         {
         }

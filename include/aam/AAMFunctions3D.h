@@ -17,41 +17,32 @@
  */
 
 /* 
- * File:   FDHelper.h
+ * File:   AAMFunctions3D.h
  * Author: Иван Губочкин
  *
- * Created on 15 Октябрь 2012 г., 17:14
+ * Created on 23 Октябрь 2012 г., 16:27
  */
 
-#ifndef FDHELPER_H
-#define	FDHELPER_H
+#ifndef AAMFUNCTIONS3D_H
+#define	AAMFUNCTIONS3D_H
 
 #include "aam.h"
-#include <opencv2/nonfree/nonfree.hpp>
 
 namespace aam
 {
-    class FDHelper
+    class AAMFunctions3D
     {
     public:
-        FDHelper();
-        virtual ~FDHelper();
-
-        void detectKeyPoints(const cv::Mat& img, const cv::Mat& mask);
-        std::vector<cv::KeyPoint> getKeyPoints();
-        std::vector<cv::KeyPoint> getSampleKeyPoints();
-        void setKeyPoints(const std::vector<cv::KeyPoint>& kp);
-        void matchImages(const cv::Mat& img, const cv::Mat& mask);
-        std::vector<cv::DMatch> getMatches();
+        static void shapeMotionRecovery(
+            const std::vector<Vertices2DList>& shapes,
+                int np,
+                RealMatrix& P, RealMatrix& c, RealMatrix& X,
+                RealMatrix& M, RealMatrix& B, RealType K = 0,
+                RealType ratio = 100);
 
     private:
-        cv::SURF detector;
-        std::vector<cv::KeyPoint> templateKeyPoints;
-        std::vector<cv::KeyPoint> sampleKeyPoints;
-        cv::Mat templateDescriptors;
-        cv::Ptr<cv::DescriptorExtractor> extractor;
-        std::vector<cv::DMatch> matches;
+
     };
 }
 
-#endif	/* FDHELPER_H */
+#endif	/* AAMFUNCTIONS3D_H */

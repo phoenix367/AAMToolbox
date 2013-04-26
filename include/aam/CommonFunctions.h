@@ -69,6 +69,8 @@ namespace aam
             const Vertices2DList& Y, Vertices2DList& Z);
         static bool convertImage(const cv::Mat& srcImage,
             cv::Mat& cvtImage, bool toGrayScale);
+        static RealType cond(const RealMatrix& A, int normType =
+            cv::NORM_L2);
 
     private:
         static bool triPred(const cv::Rect& r, const cv::Vec6f& t);

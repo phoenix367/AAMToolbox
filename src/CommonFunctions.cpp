@@ -34,6 +34,7 @@
 #include "aam/CommonFunctions.h"
 #include "aam/aam.h"
 #include "aam/vector_op.h"
+#include "aam/Exceptions.h"
 
 namespace aam
 {
@@ -730,5 +731,45 @@ namespace aam
         }
 
         return true;
+    }
+
+    RealType CommonFunctions::cond(const RealMatrix& A, int normType)
+    {
+        assert(A.dims == 2);
+
+        if (A.empty())
+        {
+            return 0;
+        }
+
+        if (A.rows != A.cols && normType != cv::NORM_L2)
+        {
+            throw InternalException("A is rectangular.  Use the 2 norm.");
+        }
+
+        RealType r;
+        if (normType == cv::NORM_L2)
+        {
+            RealMatrix u, w, vt;
+            cv::SVDecomp(A, w, u, vt, cv::SVD::NO_UV);
+            
+            if (std::find(w.begin(), w.end(), 0) != w.end())
+            {
+                r = std::numeric_limits<RealType>::infinity();
+            }
+            else
+            {
+                double minElem, maxElem;
+
+                cv::minMaxLoc(w, &minElem, &maxElem);
+                r = maxElem / minElem;
+            }
+        }
+        else
+        {
+            r = cv::norm(A, normType) * cv::norm(A.inv(), normType);
+        }
+        
+        return r;
     }
 }
