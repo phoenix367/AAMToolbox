@@ -102,7 +102,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-lopencv_core -lopencv_imgproc -lopencv_highgui -lboost_math_c99f -lboost_thread -lopencv_features2d -lopencv_nonfree
+LDLIBSOPTIONS=-lopencv_core -lopencv_imgproc -lopencv_highgui -lboost_math_c99f -lboost_thread
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -331,181 +331,181 @@ ${TESTDIR}/TestFiles/f10: ${TESTDIR}/tests/wtriangleTest.o ${OBJECTFILES:%.o=%_n
 ${TESTDIR}/tests/aamestimatorTest.o: tests/aamestimatorTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/aamestimatorTest.o tests/aamestimatorTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/aamestimatorTest.o tests/aamestimatorTest.cpp
 
 
 ${TESTDIR}/tests/atransformTest.o: tests/atransformTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/atransformTest.o tests/atransformTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/atransformTest.o tests/atransformTest.cpp
 
 
 ${TESTDIR}/tests/aldataTest.o: tests/aldataTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/aldataTest.o tests/aldataTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/aldataTest.o tests/aldataTest.cpp
 
 
 ${TESTDIR}/tests/aplymodelicTest.o: tests/aplymodelicTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/aplymodelicTest.o tests/aplymodelicTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/aplymodelicTest.o tests/aplymodelicTest.cpp
 
 
 ${TESTDIR}/tests/aplymodelTest.o: tests/aplymodelTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/aplymodelTest.o tests/aplymodelTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/aplymodelTest.o tests/aplymodelTest.cpp
 
 
 ${TESTDIR}/tests/a2vectorTest.o: tests/a2vectorTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/a2vectorTest.o tests/a2vectorTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/a2vectorTest.o tests/a2vectorTest.cpp
 
 
 ${TESTDIR}/tests/cshaTest.o: tests/cshaTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/cshaTest.o tests/cshaTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/cshaTest.o tests/cshaTest.cpp
 
 
 ${TESTDIR}/tests/cjacobianTest.o: tests/cjacobianTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/cjacobianTest.o tests/cjacobianTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/cjacobianTest.o tests/cjacobianTest.cpp
 
 
 ${TESTDIR}/tests/computeSDTest.o: tests/computeSDTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/computeSDTest.o tests/computeSDTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/computeSDTest.o tests/computeSDTest.cpp
 
 
 ${TESTDIR}/tests/cweightsTest.o: tests/cweightsTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/cweightsTest.o tests/cweightsTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/cweightsTest.o tests/cweightsTest.cpp
 
 
 ${TESTDIR}/tests/condTest.o: tests/condTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/condTest.o tests/condTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/condTest.o tests/condTest.cpp
 
 
 ${TESTDIR}/tests/delaunayTest.o: tests/delaunayTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/delaunayTest.o tests/delaunayTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/delaunayTest.o tests/delaunayTest.cpp
 
 
 ${TESTDIR}/tests/drobjectTest.o: tests/drobjectTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/drobjectTest.o tests/drobjectTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/drobjectTest.o tests/drobjectTest.cpp
 
 
 ${TESTDIR}/tests/grad2DTest.o: tests/grad2DTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/grad2DTest.o tests/grad2DTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/grad2DTest.o tests/grad2DTest.cpp
 
 
 ${TESTDIR}/tests/gsorthTest.o: tests/gsorthTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/gsorthTest.o tests/gsorthTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/gsorthTest.o tests/gsorthTest.cpp
 
 
 ${TESTDIR}/tests/makeappICTest.o: tests/makeappICTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/makeappICTest.o tests/makeappICTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/makeappICTest.o tests/makeappICTest.cpp
 
 
 ${TESTDIR}/tests/mappearanceTest.o: tests/mappearanceTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/mappearanceTest.o tests/mappearanceTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/mappearanceTest.o tests/mappearanceTest.cpp
 
 
 ${TESTDIR}/tests/msearchTest.o: tests/msearchTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/msearchTest.o tests/msearchTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/msearchTest.o tests/msearchTest.cpp
 
 
 ${TESTDIR}/tests/makeShapeICTest.o: tests/makeShapeICTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/makeShapeICTest.o tests/makeShapeICTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/makeShapeICTest.o tests/makeShapeICTest.cpp
 
 
 ${TESTDIR}/tests/msmodelTest.o: tests/msmodelTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/msmodelTest.o tests/msmodelTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/msmodelTest.o tests/msmodelTest.cpp
 
 
 ${TESTDIR}/tests/pcaTest.o: tests/pcaTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/pcaTest.o tests/pcaTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/pcaTest.o tests/pcaTest.cpp
 
 
 ${TESTDIR}/tests/procrustesTest.o: tests/procrustesTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/procrustesTest.o tests/procrustesTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/procrustesTest.o tests/procrustesTest.cpp
 
 
 ${TESTDIR}/tests/reignoiseTest.o: tests/reignoiseTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/reignoiseTest.o tests/reignoiseTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/reignoiseTest.o tests/reignoiseTest.cpp
 
 
 ${TESTDIR}/tests/sloadTest.o: tests/sloadTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/sloadTest.o tests/sloadTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/sloadTest.o tests/sloadTest.cpp
 
 
 ${TESTDIR}/tests/trainICTest.o: tests/trainICTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/trainICTest.o tests/trainICTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/trainICTest.o tests/trainICTest.cpp
 
 
 ${TESTDIR}/tests/tminfoTest.o: tests/tminfoTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/tminfoTest.o tests/tminfoTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/tminfoTest.o tests/tminfoTest.cpp
 
 
 ${TESTDIR}/tests/tmloadTest.o: tests/tmloadTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/tmloadTest.o tests/tmloadTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/tmloadTest.o tests/tmloadTest.cpp
 
 
 ${TESTDIR}/tests/wcomposTest.o: tests/wcomposTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/wcomposTest.o tests/wcomposTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/wcomposTest.o tests/wcomposTest.cpp
 
 
 ${TESTDIR}/tests/wmapTest.o: tests/wmapTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/wmapTest.o tests/wmapTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/wmapTest.o tests/wmapTest.cpp
 
 
 ${TESTDIR}/tests/wtriangleTest.o: tests/wtriangleTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -I. -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/wtriangleTest.o tests/wtriangleTest.cpp
+	$(COMPILE.cc) -g -Iinclude -Icontribute -MMD -MP -MF $@.d -o ${TESTDIR}/tests/wtriangleTest.o tests/wtriangleTest.cpp
 
 
 ${OBJECTDIR}/src/ShapeAppearanceData_nomain.o: ${OBJECTDIR}/src/ShapeAppearanceData.o src/ShapeAppearanceData.cpp 
