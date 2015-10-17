@@ -28,15 +28,14 @@
 
 #include "aam/CommonFunctions.h"
 #include "aam/aam.h"
+#include "gtest/gtest.h"
 
 /*
  * Simple C++ Test Suite
  */
 
-void testPCA()
+TEST(testPCA, PCA)
 {
-    std::cout << "pcaTest testPCA" << std::endl;
-
     aam::RealType srcData[] =
     {
         1, 2,
@@ -67,44 +66,23 @@ void testPCA()
     cv::Mat targetMeans(6, 1, aam::OpenCVRealType::type, meanData);
     cv::Mat targetEigValues(2, 1, aam::OpenCVRealType::type, eigValuesData);
 
-    try
-    {
-        aam::RealMatrix means, eigVectors, eigValues;
-        
-        aam::CommonFunctions::PCA(m, means, eigVectors, eigValues);
+    aam::RealMatrix means, eigVectors, eigValues;
 
-        if (means.rows != 6 || means.cols != 1)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testPCA (pcaTest) message=Invalid means matrix size" << std::endl;
-        }
-        else if (eigVectors.rows != 6 || eigVectors.cols != 2)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testPCA (pcaTest) message=Invalid eigen vectors matrix size" << std::endl;
-        }
-        else if (eigValues.rows != 2 || eigValues.cols != 1)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testPCA (pcaTest) message=Invalid eigen values matrix size" << std::endl;
-        }
-        else if (cv::countNonZero(cv::abs(means - targetMeans) > 1e-6))
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testPCA (pcaTest) message=Invalid means matrix data" << std::endl;
-        }
-        else if (cv::countNonZero(cv::abs(eigValues - targetEigValues) > 1e-6))
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testPCA (pcaTest) message=Invalid eigen values matrix data" << std::endl;
-        }
-    }
-    catch (std::exception& e)
-    {
-        std::cout << "%TEST_FAILED% time=0 testname=testPCA (pcaTest) message=Exception occured: " <<
-                e.what() << std::endl;
-    }
+    aam::CommonFunctions::PCA(m, means, eigVectors, eigValues);
+
+    EXPECT_EQ(means.rows, 6);
+    EXPECT_EQ(means.cols, 1);
+    EXPECT_EQ(eigVectors.rows, 6);
+    EXPECT_EQ(eigVectors.cols, 2);
+    EXPECT_EQ(eigValues.rows, 2);
+    EXPECT_EQ(eigValues.cols, 1);
+
+    EXPECT_EQ(cv::countNonZero(cv::abs(means - targetMeans) > 1e-6), 0);
+    EXPECT_EQ(cv::countNonZero(cv::abs(eigValues - targetEigValues) > 1e-6), 0);
 }
 
-void testAppPCA()
+TEST(testAppPCA, PCA)
 {
-    std::cout << "pcaTest testAppPCA" << std::endl;
-
     aam::RealType srcData[] =
     {
         1, 2,
@@ -135,57 +113,21 @@ void testAppPCA()
     cv::Mat targetMeans(6, 1, aam::OpenCVRealType::type, meanData);
     cv::Mat targetEigValues(2, 1, aam::OpenCVRealType::type, eigValuesData);
 
-    try
-    {
-        aam::RealMatrix means, eigVectors, eigValues;
+    aam::RealMatrix means, eigVectors, eigValues;
 
-        aam::CommonFunctions::appPCA(m, means, eigVectors, eigValues);
+    aam::CommonFunctions::appPCA(m, means, eigVectors, eigValues);
 
-        if (means.rows != 6 || means.cols != 1)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testAppPCA (pcaTest) message=Invalid means matrix size" << std::endl;
-        }
-        else if (eigVectors.rows != 6 || eigVectors.cols != 2)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testAppPCA (pcaTest) message=Invalid eigen vectors matrix size" << std::endl;
-        }
-        else if (eigValues.rows != 2 || eigValues.cols != 1)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testAppPCA (pcaTest) message=Invalid eigen values matrix size" << std::endl;
-        }
-        else if (cv::countNonZero(cv::abs(means - targetMeans) > 1e-6))
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testAppPCA (pcaTest) message=Invalid means matrix data" << std::endl;
-        }
-        else if (cv::countNonZero(cv::abs(eigValues - targetEigValues) > 1e-6))
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testAppPCA (pcaTest) message=Invalid eigen values matrix data" << std::endl;
-        }
-        std::cout << means + eigVectors.col(1) * eigValues(1) << std::endl;
+    EXPECT_EQ(means.rows, 6);
+    EXPECT_EQ(means.cols, 1);
+    EXPECT_EQ(eigVectors.rows, 6);
+    EXPECT_EQ(eigVectors.cols, 2);
+    EXPECT_EQ(eigValues.rows, 2);
+    EXPECT_EQ(eigValues.cols, 1);
 
-        std::cout << eigVectors << std::endl;
+    EXPECT_EQ(cv::countNonZero(cv::abs(means - targetMeans) > 1e-6), 0);
+    
+    for (int i = 0; i < 2; i++) {
+        EXPECT_EQ(cv::countNonZero(cv::abs(eigVectors.col(i).t() * eigVectors.col(i) - 
+                aam::RealMatrix::ones(1, 1)) > 1e-6), 0);
     }
-    catch (std::exception& e)
-    {
-        std::cout << "%TEST_FAILED% time=0 testname=testAppPCA (pcaTest) message=Exception occured: " <<
-                e.what() << std::endl;
-    }
-}
-
-int main(int argc, char** argv)
-{
-    std::cout << "%SUITE_STARTING% pcaTest" << std::endl;
-    std::cout << "%SUITE_STARTED%" << std::endl;
-
-    std::cout << "%TEST_STARTED% testPCA (pcaTest)" << std::endl;
-    testPCA();
-    std::cout << "%TEST_FINISHED% time=0 testPCA (pcaTest)" << std::endl;
-
-    std::cout << "%TEST_STARTED% testAppPCA (pcaTest)" << std::endl;
-    testAppPCA();
-    std::cout << "%TEST_FINISHED% time=0 testAppPCA (pcaTest)" << std::endl;
-
-    std::cout << "%SUITE_FINISHED% time=0" << std::endl;
-
-    return (EXIT_SUCCESS);
 }

@@ -1,6 +1,6 @@
 ###########################################################################
 #  Active Appearance Model toolbox                                        #
-#  Copyright (C) 2012 Ivan Gubochkin                                      #
+#  Copyright (C) 2015 Ivan Gubochkin                                      #
 #  e-mail: jhng@yandex.ru                                                 #
 #                                                                         #
 #   This program is free software: you can redistribute it and/or modify  #
@@ -45,6 +45,8 @@ set(DLIB_INCLUDE_DIRECTORY "${CONTRIBUTE_DIRECTORY}")
 
 set(LIBRARY_OUTPUT_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 
+enable_testing(true)
+
 # find OpenCV
 find_package(OpenCV REQUIRED)
 
@@ -63,5 +65,9 @@ target_link_libraries(${AAM_LIBRARY_NAME} ${OpenCV_LIBS})
 
 if (BuildTests)
     include(${CMAKE_MODULE_PATH}/gtest.cmake)
+endif()
+
+if(BuildTests)
+    add_subdirectory(tests)
 endif()
 
