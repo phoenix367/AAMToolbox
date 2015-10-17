@@ -66,7 +66,7 @@ namespace aam
     private:
         TrainModelLoader loader;
         TrainOptions options;
-        std::auto_ptr<TrainStrategy> trainStrategy;
+        std::shared_ptr<TrainStrategy> trainStrategy;
     };
 }
 

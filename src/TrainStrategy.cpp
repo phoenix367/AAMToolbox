@@ -39,10 +39,10 @@ namespace aam
         
     }
     
-    std::auto_ptr<TrainStrategy> TrainStrategy::load(
+    std::shared_ptr<TrainStrategy> TrainStrategy::load(
             const std::string& fileName)
     {
-        std::auto_ptr<TrainStrategy> trainer;
+        std::shared_ptr<TrainStrategy> trainer;
         
         cv::FileStorage storage(fileName, cv::FileStorage::READ);
 
@@ -70,12 +70,10 @@ namespace aam
         switch (algType)
         {
             case algorithm::conventional:
-                trainer = std::auto_ptr<TrainStrategy>(
-                        new TrainConventional(ch));
+                trainer = std::make_shared<TrainConventional>(ch);
                 break;
             case algorithm::inverseComposition:
-                trainer = std::auto_ptr<TrainStrategy>(
-                        new TrainIC2D(ch));
+                trainer = std::make_shared<TrainIC2D>(ch);
                 break;
             default:
                 throw InvalidModelFileException();
@@ -93,20 +91,18 @@ namespace aam
         this->options = newOptions;
     }
 
-    std::auto_ptr<TrainStrategy> TrainStrategy::create(
+    std::shared_ptr<TrainStrategy> TrainStrategy::create(
         algorithm::AAMAlgorithm alg, int channels)
     {
-        std::auto_ptr<TrainStrategy> ptr;
+        std::shared_ptr<TrainStrategy> ptr;
 
         switch (alg)
         {
             case algorithm::conventional:
-                ptr = std::auto_ptr<TrainStrategy>(
-                        new TrainConventional(channels));
+                ptr = std::make_shared<TrainConventional>(channels);
                 break;
             case algorithm::inverseComposition:
-                ptr = std::auto_ptr<TrainStrategy>(
-                        new TrainIC2D(channels));
+                ptr = std::make_shared<TrainIC2D>(channels);
                 break;
             default:
                 throw InternalException();

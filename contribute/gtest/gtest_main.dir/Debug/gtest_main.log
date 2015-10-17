@@ -1,0 +1,23 @@
+﻿Build started 14.06.2013 12:35:31.
+     1>Project "D:\code\VMF\3pty\gtest\gtest_main.vcxproj" on node 4 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "gtest_main.dir\Debug\gtest_main.lastbuildstate".
+       InitializeBuildStatus:
+         Creating "gtest_main.dir\Debug\gtest_main.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       CustomBuild:
+         Building Custom Rule D:/code/VMF/3pty/gtest/CMakeLists.txt
+         CMake does not need to re-run because D:\code\VMF\3pty\gtest\CMakeFiles\generate.stamp is up-to-date.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ID:/code/VMF/3pty/gtest/include /ID:/code/VMF/3pty/gtest /Zi /nologo /W4 /WX /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D WIN32 /D _WINDOWS /D _UNICODE /D UNICODE /D WIN32 /D _WIN32 /D STRICT /D WIN32_LEAN_AND_MEAN /D GTEST_HAS_PTHREAD=0 /D _HAS_EXCEPTIONS=1 /D "CMAKE_INTDIR=\"Debug\"" /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"gtest_main.dir\Debug\\" /Fd"D:/code/VMF/build/Debug/gtest_main.pdb" /Gd /TP /wd4127 /wd4251 /wd4275 /analyze- /errorReport:prompt src\gtest_main.cc  -J 
+         gtest_main.cc
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"D:\code\VMF\build\Debug\gtest_main.lib" /NOLOGO gtest_main.dir\Debug\gtest_main.obj
+         gtest_main.vcxproj -> D:\code\VMF\build\Debug\gtest_main.lib
+       FinalizeBuildStatus:
+         Deleting file "gtest_main.dir\Debug\gtest_main.unsuccessfulbuild".
+         Touching "gtest_main.dir\Debug\gtest_main.lastbuildstate".
+     1>Done Building Project "D:\code\VMF\3pty\gtest\gtest_main.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.82

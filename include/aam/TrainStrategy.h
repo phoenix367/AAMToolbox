@@ -51,9 +51,9 @@ namespace aam
             Vertices2DList& foundPoints, bool verbose = false) = 0;
         int getColorChannels();
         
-        static std::auto_ptr<TrainStrategy> load(
+        static std::shared_ptr<TrainStrategy> load(
             const std::string& fileName);
-        static std::auto_ptr<TrainStrategy> create(
+        static std::shared_ptr<TrainStrategy> create(
             algorithm::AAMAlgorithm alg, int channels);
 
         void setOptions(const TrainOptions& newOptions);
