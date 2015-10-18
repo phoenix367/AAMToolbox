@@ -30,39 +30,11 @@
 #include "aam/CommonFunctions.h"
 #include "gtest/gtest.h"
 #include "test_config.h"
+#include "load_vector.h"
 
 /*
  * Simple C++ Test Suite
  */
-
-bool loadVector(const std::string& fileName, int rows,
-        int columns, aam::RealMatrix& target)
-{
-    cv::Mat1d result(rows, columns);
-
-    FILE *in = fopen(fileName.c_str(), "rb");
-    if (in == NULL)
-    {
-        return false;
-    }
-
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < columns; j++)
-        {
-            if (fread(result.ptr(i, j), sizeof(double), 1, in) != 1)
-            {
-                fclose(in);
-                return false;
-            }
-        }
-    }
-
-    target = result;
-
-    fclose(in);
-    return true;
-}
 
 TEST(Gradient, testGradient)
 {

@@ -52,6 +52,8 @@ configure_file("${CMAKE_SOURCE_DIR}/test_config.h.in" "${CMAKE_BINARY_DIR}/test_
 
 # find OpenCV
 find_package(OpenCV REQUIRED)
+find_package(Boost COMPONENTS thread system REQUIRED)
+find_package(Threads REQUIRED)
 
 set(AAM_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 set(AAM_PUBLIC_DIR "${AAM_DIR}/include")
@@ -64,7 +66,7 @@ file(GLOB AAM_HEADERS "${AAM_PUBLIC_DIR}/*.h")
 file(GLOB AAM_SOURCES "${AAM_SOURCE_DIR}/*.h" "${AAM_SOURCE_DIR}/*.cpp")
 
 add_library(${AAM_LIBRARY_NAME} ${AAM_HEADERS} ${AAM_SOURCES})
-target_link_libraries(${AAM_LIBRARY_NAME} ${OpenCV_LIBS})
+target_link_libraries(${AAM_LIBRARY_NAME} ${CMAKE_THREAD_LIBS_INIT} ${OpenCV_LIBS} ${Boost_LIBRARIES})
 
 if (BuildTests)
     include(${CMAKE_MODULE_PATH}/gtest.cmake)

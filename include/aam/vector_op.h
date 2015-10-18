@@ -216,6 +216,19 @@ namespace aam
         return result;
     }
 
+    template<typename T, typename U> std::vector<T> operator +(
+        const std::vector<T>& a, U b)
+    {
+        std::vector<T> result(a.size());
+
+        for (size_t i = 0; i < a.size(); i++)
+        {
+            result[i] = a[i] + b;
+        }
+
+        return result;
+    }
+
     template<typename T, typename U> std::vector<T> operator /(
         const std::vector<T>& a, U b)
     {

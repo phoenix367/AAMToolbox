@@ -32,6 +32,7 @@
 #include "dlib/optimization.h"
 #include <boost/thread/thread.hpp>
 #include <iomanip>
+#include <thread>
 
 #include "aam/AAMFunctions2D.h"
 #include "aam/PiecewiseWarp.h"
@@ -55,11 +56,11 @@ namespace aam
         Point2D offsetvA, offsetvB;
         Vertices2DList av(aVertices), bv(bVertices);
 
-        offsetvA = mean(aVertices);
-        offsetvB = mean(bVertices);
+        offsetvA = -mean(aVertices);
+        offsetvB = -mean(bVertices);
 
-        av -= offsetvA;
-        bv -= offsetvB;
+        av += offsetvA;
+        bv += offsetvB;
 
         RealType dA = mean(dist(av));
         RealType dB = mean(dist(bv));
@@ -71,8 +72,8 @@ namespace aam
         rotationAngle(av, rotA);
         rotationAngle(bv, rotB);
 
-        RealType offsetR = mean(rotA - rotB);
-        std::vector<RealType> rot = rotA - offsetR;
+        RealType offsetR = -mean(rotA - rotB);
+        std::vector<RealType> rot = rotA + offsetR;
 
         std::vector<RealType> d = dist(result);
         for (int i = 0; i < result.size(); i++)
@@ -83,7 +84,7 @@ namespace aam
 
         tform.offsetV = offsetvA;
         tform.offsetSX = offsetS * cos(offsetR);
-        tform.offsetSY = -offsetS * sin(offsetR);
+        tform.offsetSY = offsetS * sin(offsetR);
         tform.offsetS = offsetS;
         tform.offsetR = offsetR;
     }
@@ -115,8 +116,8 @@ namespace aam
         result.resize(vertices.size());
         for (int i = 0; i < result.size(); i++)
         {
-            result[i].x = d[i] * cos(rot[i]) / offsetS + tform.offsetV.x;
-            result[i].y = d[i] * sin(rot[i]) / offsetS + tform.offsetV.y;
+            result[i].x = d[i] * cos(rot[i]) / offsetS - tform.offsetV.x;
+            result[i].y = d[i] * sin(rot[i]) / offsetS - tform.offsetV.y;
         }
     }
 
@@ -554,9 +555,9 @@ namespace aam
             R = RealMatrix();
             return;
         }
-        
+
         int threadsCount = std::min(trainData.size(),
-                boost::thread::hardware_concurrency());
+                std::thread::hardware_concurrency());
 
         boost::thread_group threadGroup;
         std::vector<RealMatrix> drdps(threadsCount);
