@@ -47,6 +47,9 @@ set(LIBRARY_OUTPUT_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 
 enable_testing(true)
 
+set(AAM_TEST_DATA_PATH "${CMAKE_SOURCE_DIR}/data")
+configure_file("${CMAKE_SOURCE_DIR}/test_config.h.in" "${CMAKE_BINARY_DIR}/test_config.h" NEWLINE_STYLE UNIX)
+
 # find OpenCV
 find_package(OpenCV REQUIRED)
 

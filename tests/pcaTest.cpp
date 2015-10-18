@@ -34,7 +34,7 @@
  * Simple C++ Test Suite
  */
 
-TEST(testPCA, PCA)
+TEST(PCA, testPCA)
 {
     aam::RealType srcData[] =
     {
@@ -81,7 +81,7 @@ TEST(testPCA, PCA)
     EXPECT_EQ(cv::countNonZero(cv::abs(eigValues - targetEigValues) > 1e-6), 0);
 }
 
-TEST(testAppPCA, PCA)
+TEST(PCA, testAppPCA)
 {
     aam::RealType srcData[] =
     {
