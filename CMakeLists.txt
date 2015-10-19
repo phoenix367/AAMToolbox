@@ -73,5 +73,6 @@ endif()
 
 if(BuildTests)
     add_subdirectory(tests)
+    add_test (NAME AAM_tests COMMAND aam-tests)
 endif()
 
