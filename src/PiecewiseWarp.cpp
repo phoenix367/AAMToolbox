@@ -23,7 +23,6 @@
  * Created on 16 Август 2012 г., 12:07
  */
 
-#include <boost/assign/list_of.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <iostream>
 #include <iterator>
@@ -73,10 +72,11 @@ namespace aam
             };
 
             std::vector<cv::Point2f> trianglePoints =
-                    boost::assign::list_of
-                    (cv::Point2f(verticesDst[0].x, verticesDst[0].y))
-                    (cv::Point2f(verticesDst[1].x, verticesDst[1].y))
-                    (cv::Point2f(verticesDst[2].x, verticesDst[2].y));
+            {
+                    (cv::Point2f(verticesDst[0].x, verticesDst[0].y)),
+                    (cv::Point2f(verticesDst[1].x, verticesDst[1].y)),
+                    (cv::Point2f(verticesDst[2].x, verticesDst[2].y))
+            };
             cv::Rect boundRect = cv::boundingRect(trianglePoints);
             //cv::Rect boundRect(0, 0, imageSize.width, imageSize.height);
             
@@ -204,10 +204,11 @@ namespace aam
             };
 
             std::vector<cv::Point2f> trianglePoints =
-                    boost::assign::list_of
-                    (cv::Point2f(verticesDst[0].x, verticesDst[0].y))
-                    (cv::Point2f(verticesDst[1].x, verticesDst[1].y))
-                    (cv::Point2f(verticesDst[2].x, verticesDst[2].y));
+            {
+                    (cv::Point2f(verticesDst[0].x, verticesDst[0].y)),
+                    (cv::Point2f(verticesDst[1].x, verticesDst[1].y)),
+                    (cv::Point2f(verticesDst[2].x, verticesDst[2].y))
+            };
             cv::Rect boundRect = cv::boundingRect(trianglePoints);
             //cv::Rect boundRect(0, 0, imageSize.width, imageSize.height);
 

@@ -30,9 +30,9 @@
 #include <algorithm>
 
 #include "dlib/optimization.h"
-#include <boost/thread/thread.hpp>
 #include <iomanip>
 #include <thread>
+#include <future>
 
 #include "aam/AAMFunctions2D.h"
 #include "aam/PiecewiseWarp.h"
@@ -82,7 +82,7 @@ namespace aam
             result[i].y = d[i] * sin(rot[i]);
         }
 
-        tform.offsetV = offsetvA;
+        tform.offsetV = -offsetvA;
         tform.offsetSX = offsetS * cos(offsetR);
         tform.offsetSY = offsetS * sin(offsetR);
         tform.offsetS = offsetS;
@@ -116,8 +116,8 @@ namespace aam
         result.resize(vertices.size());
         for (int i = 0; i < result.size(); i++)
         {
-            result[i].x = d[i] * cos(rot[i]) / offsetS - tform.offsetV.x;
-            result[i].y = d[i] * sin(rot[i]) / offsetS - tform.offsetV.y;
+            result[i].x = d[i] * cos(rot[i]) / offsetS + tform.offsetV.x;
+            result[i].y = d[i] * sin(rot[i]) / offsetS + tform.offsetV.y;
         }
     }
 
@@ -559,7 +559,7 @@ namespace aam
         int threadsCount = std::min(trainData.size(),
                 std::thread::hardware_concurrency());
 
-        boost::thread_group threadGroup;
+        std::vector<std::future<void> > threadGroup;
         std::vector<RealMatrix> drdps(threadsCount);
         int step = trainData.size() / threadsCount;
         std::vector<TrainModelInfo>::const_iterator p =
@@ -567,18 +567,21 @@ namespace aam
         
         for (int i = 0; i < threadsCount - 1; i++, p += step)
         {
-            threadGroup.create_thread(boost::bind(makeAAMHelper,
+            threadGroup.push_back(std::async(std::bind(makeAAMHelper,
                     p, p + step, p - trainData.begin(),
                     shapeAppearance, shapeData,
-                    appearanceData, boost::ref(drdps[i])));
+                    appearanceData, std::ref(drdps[i]))));
         }
 
-        threadGroup.create_thread(boost::bind(makeAAMHelper,
+        threadGroup.push_back(std::async(std::bind(makeAAMHelper,
                 p, trainData.end(), p - trainData.begin(),
                 shapeAppearance, shapeData,
-                appearanceData, boost::ref(drdps[threadsCount - 1])));
+                appearanceData, std::ref(drdps[threadsCount - 1]))));
         
-        threadGroup.join_all();
+        for (size_t i = 0; i < threadGroup.size(); i++)
+        {
+            threadGroup[i].get();
+        }
 
         RealMatrix drdpt = RealMatrix::zeros(
                 shapeAppearance.eigVectors.cols + POSE_OFFSETS,
@@ -934,11 +937,11 @@ namespace aam
         for (std::vector<TrainModelInfo>::const_iterator p = beginSeq;
                 p != endSeq; p++, currentIndex++)
         {
-            std::cout << "Processing sample " << std::dec <<
-                    (int) (currentIndex + 1) <<
-                    " of thread " << std::hex <<
-                    boost::this_thread::get_id() <<
-                    "...." << std::dec << std::endl;
+//            std::cout << "Processing sample " << std::dec <<
+//                    (int) (currentIndex + 1) <<
+//                    " of thread " << std::hex <<
+//                    boost::this_thread::get_id() <<
+//                    "...." << std::dec << std::endl;
 
             for (int j = 0; j < shapeAppearance.eigVectors.cols +
                     POSE_OFFSETS; j++)

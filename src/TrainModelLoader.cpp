@@ -25,7 +25,6 @@
 
 #include <opencv/highgui.h>
 #include <fstream>
-#include <boost/lexical_cast.hpp>
 #include <string>
 #include <iosfwd>
 #include <vector>

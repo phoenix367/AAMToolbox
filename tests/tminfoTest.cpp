@@ -25,11 +25,11 @@
 
 #include <stdlib.h>
 #include <iostream>
-#include <boost/assign.hpp>
 #include <vector>
 #include <opencv2/highgui/highgui.hpp>
 
 #include "aam/TrainModelInfo.h"
+#include "gtest/gtest.h"
 
 /*
  * Simple C++ Test Suite
@@ -99,9 +99,9 @@ const int points[2 * TOTAL_POINTS_NUMBER] =
    324,   245
 };
 
-std::set<int> targetPtNumbers = boost::assign::list_of<int>
-     (0) (38) (37) (36) (31) (32) (33) (12) (11) (10) (9)
-     (8) (7) (6) (5) (4) (3) (2) (1);
+std::set<int> targetPtNumbers = {
+     (0), (38), (37), (36), (31), (32), (33), (12), (11), (10), (9),
+     (8), (7), (6), (5), (4), (3), (2), (1)};
 
 bool checkCoordList(const std::vector<aam::LineType>& lines,
         const std::set<int>& ptNumbers)
@@ -116,10 +116,8 @@ bool checkCoordList(const std::vector<aam::LineType>& lines,
     return (firstPtNumber == ptNumbers);
 }
 
-void testModel()
+TEST(Model, testModel)
 {
-    std::cout << "tminfoTest testModel" << std::endl;
-
     std::vector<aam::Point2D> pt;
 
     for (int i = 0; i < TOTAL_POINTS_NUMBER; i++)
@@ -134,72 +132,35 @@ void testModel()
 
     aam::TrainModelInfo modelInfo;
 
-    try
-    {
-        modelInfo.setVertices(pt);
+    modelInfo.setVertices(pt);
 
-        std::vector<aam::LineType> lines = modelInfo.getLines();
+    std::vector<aam::LineType> lines = modelInfo.getLines();
 
-        if (lines.size() != 19)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testModel (tminfoTest) message=Invalid lines array size" << std::endl;
-        }
-        else if (!checkCoordList(lines, targetPtNumbers))
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testModel (tminfoTest) message=Invalid line numbers" << std::endl;
-        }
-    }
-    catch (std::exception& e)
-    {
-        std::cout << "%TEST_FAILED% time=0 testname=testModel (tminfoTest) message=Exception occures: " <<
-                e.what() << std::endl;
-    }
+    EXPECT_EQ(lines.size(), 19);
+    EXPECT_TRUE(checkCoordList(lines, targetPtNumbers));
 }
 
-void testEmpty()
+TEST(Model, testEmpty)
 {
-    std::cout << "tminfoTest testEmpty" << std::endl;
-
     aam::TrainModelInfo modelInfo;
-    try
-    {
-        modelInfo.setVertices(std::vector<aam::Point2D>());
 
-        std::vector<aam::LineType> lines = modelInfo.getLines();
-        if (!lines.empty())
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testEmpty (tminfoTest) message=Lines array is not empty" << std::endl;
-        }
-    }
-    catch (std::exception& e)
-    {
-        std::cout << "%TEST_FAILED% time=0 testname=testEmpty (tminfoTest) message=Exception occures: " <<
-                e.what() << std::endl;
-    }
+    modelInfo.setVertices(std::vector<aam::Point2D>());
+
+    std::vector<aam::LineType> lines = modelInfo.getLines();
+    EXPECT_TRUE(lines.empty());
 }
 
-void testOne()
+TEST(Model, testOne)
 {
-    std::cout << "tminfoTest testOne" << std::endl;
-
     aam::TrainModelInfo modelInfo;
-    try
-    {
-        aam::Vertices2DList pt = boost::assign::list_of<aam::Point2D>
-                (aam::Point2D(1.0, 2.0));
-        modelInfo.setVertices(pt);
 
-        std::vector<aam::LineType> lines = modelInfo.getLines();
-        if (!lines.empty())
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testOne (tminfoTest) message=Lines array is not empty" << std::endl;
-        }
-    }
-    catch (std::exception& e)
-    {
-        std::cout << "%TEST_FAILED% time=0 testname=testOne (tminfoTest) message=Exception occures: " <<
-                e.what() << std::endl;
-    }
+    aam::Vertices2DList pt = {
+            (aam::Point2D(1.0, 2.0))
+    };
+    modelInfo.setVertices(pt);
+
+    std::vector<aam::LineType> lines = modelInfo.getLines();
+    EXPECT_TRUE(lines.empty());
 }
 
 void testSetImage()
@@ -276,34 +237,4 @@ void testSetImageGray()
         std::cout << "%TEST_FAILED% time=0 testname=testSetImageGray (tminfoTest) message=Exception occures: " <<
                 e.what() << std::endl;
     }
-}
-
-int main(int argc, char** argv)
-{
-    std::cout << "%SUITE_STARTING% tminfoTest" << std::endl;
-    std::cout << "%SUITE_STARTED%" << std::endl;
-
-    std::cout << "%TEST_STARTED% testModel (tminfoTest)" << std::endl;
-    testModel();
-    std::cout << "%TEST_FINISHED% time=0 testModel (tminfoTest)" << std::endl;
-
-    std::cout << "%TEST_STARTED% testEmpty (tminfoTest)" << std::endl;
-    testEmpty();
-    std::cout << "%TEST_FINISHED% time=0 testEmpty (tminfoTest)" << std::endl;
-
-    std::cout << "%TEST_STARTED% testOne (tminfoTest)" << std::endl;
-    testOne();
-    std::cout << "%TEST_FINISHED% time=0 testOne (tminfoTest)" << std::endl;
-
-    std::cout << "%TEST_STARTED% testSetImage (tminfoTest)" << std::endl;
-    testSetImage();
-    std::cout << "%TEST_FINISHED% time=0 testSetImage (tminfoTest)" << std::endl;
-
-    std::cout << "%TEST_STARTED% testSetImageGray (tminfoTest)" << std::endl;
-    testSetImageGray();
-    std::cout << "%TEST_FINISHED% time=0 testSetImageGray (tminfoTest)" << std::endl;
-
-    std::cout << "%SUITE_FINISHED% time=0" << std::endl;
-
-    return (EXIT_SUCCESS);
 }

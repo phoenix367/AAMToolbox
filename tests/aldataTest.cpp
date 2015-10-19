@@ -284,7 +284,7 @@ aam::RealType alignedVerticesData[2 * TOTAL_POINTS_NUMBER] =
 
 TEST(AlignData, testAlign)
 {
-    aam::Point2D targetOffsetV(-289.10344827586209, -311.4655172413793);
+    aam::Point2D targetOffsetV(289.10344827586209, 311.4655172413793);
 
     aam::TForm tform;
     aam::Vertices2DList result;
@@ -322,7 +322,7 @@ TEST(AlignData, testAlignInverse)
 {
     aam::TForm tform;
 
-    tform.offsetV = aam::Point2D(-289.10344827586209, -311.4655172413793);
+    tform.offsetV = aam::Point2D(289.10344827586209, 311.4655172413793);
     tform.offsetSX = 1.0087528652811386;
     tform.offsetSY = 0.011903690443852661;
 

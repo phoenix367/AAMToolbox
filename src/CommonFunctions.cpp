@@ -23,11 +23,7 @@
  * Created on 12 Август 2012 г., 22:19
  */
 
-#include <boost/math/special_functions/sign.hpp>
-#include <boost/math/special_functions/round.hpp>
-#include <boost/bind/bind.hpp>
 #include <vector>
-#include <boost/assign/list_of.hpp>
 #include <limits>
 #include <algorithm>
 
@@ -38,6 +34,10 @@
 
 namespace aam
 {
+    template <typename T> int sign(T val) {
+        return (T(0) < val) - (val < T(0));
+    }
+
     void CommonFunctions::PCA(const RealMatrix& data, RealMatrix& means,
             RealMatrix& eigenVectors, RealMatrix& eigenValues)
     {
@@ -69,7 +69,7 @@ namespace aam
 
         for (int i = 0; i < u.cols; i++)
         {
-            int sgn = boost::math::sign(u.at<RealType>(0, i));
+            int sgn = sign(u.at<RealType>(0, i));
 
             u.col(i) *= sgn;
         }
@@ -128,8 +128,9 @@ namespace aam
         std::vector<cv::Vec6f> tmp;
         sd.getTriangleList(tmp);
 
+        using std::placeholders::_1;
         std::vector<cv::Vec6f>::iterator itTriEnd =
-                std::remove_if(tmp.begin(), tmp.end(), boost::bind(
+                std::remove_if(tmp.begin(), tmp.end(), std::bind(
                     CommonFunctions::triPred, r, _1));
         
         triangles.resize(itTriEnd - tmp.begin());
@@ -169,8 +170,8 @@ namespace aam
 
         for (int i = 0; i < lines.size(); i++)
         {
-            polyPoints[i].x = boost::math::round(points[lines[i]].x);
-            polyPoints[i].y = boost::math::round(points[lines[i]].y);
+            polyPoints[i].x = std::round(points[lines[i]].x);
+            polyPoints[i].y = std::round(points[lines[i]].y);
         }
 
         std::vector<std::vector<cv::Point> > t(1, polyPoints);
