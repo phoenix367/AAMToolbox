@@ -28,15 +28,14 @@
 #include <exception>
 
 #include "aam/CommonFunctions.h"
+#include "gtest/gtest.h"
 
 /*
  * Simple C++ Test Suite
  */
 
-void testRemoveNoise()
+TEST(EIGNoise, testRemoveNoise)
 {
-    std::cout << "reignoiseTest testRemoveNoise" << std::endl;
-
     aam::RealType eigVectorsData[] =
     {
         1, 5, 9,
@@ -50,45 +49,26 @@ void testRemoveNoise()
         1, 0.3, 1e-4
     };
 
-    try
-    {
-        aam::RealMatrix eigVectors(4, 3, eigVectorsData);
-        aam::RealMatrix targetEigVectors(eigVectors.colRange(0, 2));
-        aam::RealMatrix eigValues(3, 1, eigValuesData);
-        aam::RealMatrix targetEigValues(eigValues.rowRange(0, 2));
+    aam::RealMatrix eigVectors(4, 3, eigVectorsData);
+    aam::RealMatrix targetEigVectors(eigVectors.colRange(0, 2));
+    aam::RealMatrix eigValues(3, 1, eigValuesData);
+    aam::RealMatrix targetEigValues(eigValues.rowRange(0, 2));
 
-        aam::CommonFunctions::removeEigNoise(eigVectors, eigValues, 0.99);
+    aam::CommonFunctions::removeEigNoise(eigVectors, eigValues, 0.99);
 
-        if (eigVectors.rows != 4 || eigVectors.cols != 2)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testRemoveNoise (reignoiseTest) message=Invalid eigen vectors matrix size" << std::endl;
-        }
-        else if (eigValues.rows != 2 || eigValues.cols != 1)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testRemoveNoise (reignoiseTest) message=Invalid eigen values array size" << std::endl;
-        }
-        else if (cv::countNonZero(cv::abs(
-                eigVectors - targetEigVectors) > 1e-6))
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testRemoveNoise (reignoiseTest) message=Invalid eigen vectors matrix data" << std::endl;
-        }
-        else if (cv::countNonZero(cv::abs(
-                eigValues - targetEigValues) > 1e-6))
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testRemoveNoise (reignoiseTest) message=Invalid eigen values array data" << std::endl;
-        }
-    }
-    catch (std::exception& e)
-    {
-        std::cout << "%TEST_FAILED% time=0 testname=testRemoveNoise (reignoiseTest) message=Exception occured: " <<
-                e.what() << std::endl;
-    }
+    EXPECT_EQ(eigVectors.rows, 4);
+    EXPECT_EQ(eigVectors.cols, 2);
+    EXPECT_EQ(eigValues.rows, 2);
+    EXPECT_EQ(eigValues.cols, 1);
+
+    EXPECT_EQ(cv::countNonZero(cv::abs(
+            eigVectors - targetEigVectors) > 1e-6), 0);
+    EXPECT_EQ(cv::countNonZero(cv::abs(
+            eigValues - targetEigValues) > 1e-6), 0);
 }
 
-void testRemoveNoiseOne()
+TEST(EIGNoise, testRemoveNoiseOne)
 {
-    std::cout << "reignoiseTest testRemoveNoiseOne" << std::endl;
-
     aam::RealType eigVectorsData[] =
     {
         1,
@@ -102,86 +82,30 @@ void testRemoveNoiseOne()
         1
     };
 
-    try
-    {
-        aam::RealMatrix eigVectors(4, 1, eigVectorsData);
-        aam::RealMatrix targetEigVectors(eigVectors);
-        aam::RealMatrix eigValues(1, 1, eigValuesData);
-        aam::RealMatrix targetEigValues(eigValues);
+    aam::RealMatrix eigVectors(4, 1, eigVectorsData);
+    aam::RealMatrix targetEigVectors(eigVectors);
+    aam::RealMatrix eigValues(1, 1, eigValuesData);
+    aam::RealMatrix targetEigValues(eigValues);
 
-        aam::CommonFunctions::removeEigNoise(eigVectors, eigValues, 0.99);
+    aam::CommonFunctions::removeEigNoise(eigVectors, eigValues, 0.99);
 
-        if (eigVectors.rows != 4 || eigVectors.cols != 1)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testRemoveNoiseOne (reignoiseTest) message=Invalid eigen vectors matrix size" << std::endl;
-        }
-        else if (eigValues.rows != 1 || eigValues.cols != 1)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testRemoveNoiseOne (reignoiseTest) message=Invalid eigen values array size" << std::endl;
-        }
-        else if (cv::countNonZero(cv::abs(
-                eigVectors - targetEigVectors) > 1e-6))
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testRemoveNoiseOne (reignoiseTest) message=Invalid eigen vectors matrix data" << std::endl;
-        }
-        else if (cv::countNonZero(cv::abs(
-                eigValues - targetEigValues) > 1e-6))
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testRemoveNoiseOne (reignoiseTest) message=Invalid eigen values array data" << std::endl;
-        }
-    }
-    catch (std::exception& e)
-    {
-        std::cout << "%TEST_FAILED% time=0 testname=testRemoveNoiseOne (reignoiseTest) message=Exception occured: " <<
-                e.what() << std::endl;
-    }
+    EXPECT_EQ(eigVectors.rows, 4);
+    EXPECT_EQ(eigVectors.cols, 1);
+    EXPECT_EQ(eigValues.rows, 1);
+    EXPECT_EQ(eigValues.cols, 1);
+    EXPECT_EQ(cv::countNonZero(cv::abs(
+            eigVectors - targetEigVectors) > 1e-6), 0);
+    EXPECT_EQ(cv::countNonZero(cv::abs(
+            eigValues - targetEigValues) > 1e-6), 0);
 }
 
-void testRemoveNoiseEmpty()
+TEST(EIGNoise, testRemoveNoiseEmpty)
 {
-    std::cout << "reignoiseTest testRemoveNoiseEmpty" << std::endl;
+    aam::RealMatrix eigVectors;
+    aam::RealMatrix eigValues;
 
-    try
-    {
-        aam::RealMatrix eigVectors;
-        aam::RealMatrix eigValues;
+    aam::CommonFunctions::removeEigNoise(eigVectors, eigValues, 0.99);
 
-        aam::CommonFunctions::removeEigNoise(eigVectors, eigValues, 0.99);
-
-        if (!eigVectors.empty())
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testRemoveNoiseEmpty (reignoiseTest) message=Eigen vectors matrix isn't empty" << std::endl;
-        }
-        else if (!eigValues.empty())
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testRemoveNoiseEmpty (reignoiseTest) message=Eigen values array isn't empty" << std::endl;
-        }
-    }
-    catch (std::exception& e)
-    {
-        std::cout << "%TEST_FAILED% time=0 testname=testRemoveNoiseEmpty (reignoiseTest) message=Exception occured: " <<
-                e.what() << std::endl;
-    }
-}
-
-int main(int argc, char** argv)
-{
-    std::cout << "%SUITE_STARTING% reignoiseTest" << std::endl;
-    std::cout << "%SUITE_STARTED%" << std::endl;
-
-    std::cout << "%TEST_STARTED% testRemoveNoise (reignoiseTest)" << std::endl;
-    testRemoveNoise();
-    std::cout << "%TEST_FINISHED% time=0 testRemoveNoise (reignoiseTest)" << std::endl;
-
-    std::cout << "%TEST_STARTED% testRemoveNoiseOne (reignoiseTest)" << std::endl;
-    testRemoveNoiseOne();
-    std::cout << "%TEST_FINISHED% time=0 testRemoveNoiseOne (reignoiseTest)" << std::endl;
-
-    std::cout << "%TEST_STARTED% testRemoveNoiseEmpty (reignoiseTest)" << std::endl;
-    testRemoveNoiseEmpty();
-    std::cout << "%TEST_FINISHED% time=0 testRemoveNoiseEmpty (reignoiseTest)" << std::endl;
-
-    std::cout << "%SUITE_FINISHED% time=0" << std::endl;
-
-    return (EXIT_SUCCESS);
+    EXPECT_TRUE(eigVectors.empty());
+    EXPECT_TRUE(eigValues.empty());
 }

@@ -30,6 +30,7 @@
 
 #include "aam/TrainModelInfo.h"
 #include "gtest/gtest.h"
+#include "test_config.h"
 
 /*
  * Simple C++ Test Suite
@@ -163,78 +164,43 @@ TEST(Model, testOne)
     EXPECT_TRUE(lines.empty());
 }
 
-void testSetImage()
+TEST(Model, testSetImage)
 {
-    std::cout << "tminfoTest testSetImage" << std::endl;
-
     aam::TrainModelInfo modelInfo;
-    try
-    {
-        cv::Mat im = cv::imread("data/IMM/01-1m.jpg");
-        modelInfo.setImage(im);
 
-        cv::Mat resImage = modelInfo.getImage();
+    std::ostringstream pathStream;
+    pathStream << AAM_TEST_DATA_PATH << "/IMM/01-1m.jpg";
+    cv::Mat im = cv::imread(pathStream.str());
+    modelInfo.setImage(im);
 
-        if (resImage.rows != 480 || resImage.cols != 640)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testSetImage (tminfoTest) message=Invalid image size" << std::endl;
-        }
-        else if (resImage.type() != CV_64FC3)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testSetImage (tminfoTest) message=Invalid result image type" << std::endl;
-        }
-        else
-        {
-            cv::Mat1b res;
-            cv::inRange(resImage, cv::Matx13d::zeros(), cv::Matx13d::ones(), res);
+    cv::Mat resImage = modelInfo.getImage();
 
-            if (cv::countNonZero(res) != 640 * 480)
-            {
-                std::cout << "%TEST_FAILED% time=0 testname=testSetImage (tminfoTest) message=Image elements not in [0; 1] range" << std::endl;
-            }
-        }
-    }
-    catch (std::exception& e)
-    {
-        std::cout << "%TEST_FAILED% time=0 testname=testSetImage (tminfoTest) message=Exception occures: " <<
-                e.what() << std::endl;
-    }
+    EXPECT_EQ(resImage.rows, 480);
+    EXPECT_EQ(resImage.cols, 640);
+    EXPECT_EQ(resImage.type(), CV_64FC3);
+    cv::Mat1b res;
+    cv::inRange(resImage, cv::Matx13d::zeros(), cv::Matx13d::ones(), res);
+
+    EXPECT_EQ(cv::countNonZero(res), 640 * 480);
 }
 
-void testSetImageGray()
+TEST(Model, testSetImageGray)
 {
-    std::cout << "tminfoTest testSetImageGray" << std::endl;
-
     aam::TrainModelInfo modelInfo;
-    try
-    {
-        cv::Mat im = cv::imread("data/IMM/01-1m.jpg");
-        modelInfo.setImage(im, true);
 
-        cv::Mat resImage = modelInfo.getImage();
+    std::ostringstream pathStream;
+    pathStream << AAM_TEST_DATA_PATH << "/IMM/01-1m.jpg";
+    cv::Mat im = cv::imread(pathStream.str());
+    modelInfo.setImage(im, true);
 
-        if (resImage.rows != 480 || resImage.cols != 640)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testSetImageGray (tminfoTest) message=Invalid image size" << std::endl;
-        }
-        else if (resImage.type() != CV_64FC1)
-        {
-            std::cout << "%TEST_FAILED% time=0 testname=testSetImageGray (tminfoTest) message=Invalid result image type" << std::endl;
-        }
-        else
-        {
-            cv::Mat1b res;
-            cv::inRange(resImage, 0, 1, res);
+    cv::Mat resImage = modelInfo.getImage();
 
-            if (cv::countNonZero(res) != 640 * 480)
-            {
-                std::cout << "%TEST_FAILED% time=0 testname=testSetImageGray (tminfoTest) message=Image elements not in [0; 1] range" << std::endl;
-            }
-        }
-    }
-    catch (std::exception& e)
-    {
-        std::cout << "%TEST_FAILED% time=0 testname=testSetImageGray (tminfoTest) message=Exception occures: " <<
-                e.what() << std::endl;
-    }
+    EXPECT_EQ(resImage.rows, 480);
+    EXPECT_EQ(resImage.cols, 640);
+    EXPECT_EQ(resImage.type(), CV_64FC1);
+
+    cv::Mat1b res;
+    cv::inRange(resImage, 0, 1, res);
+
+    EXPECT_EQ(cv::countNonZero(res), 640 * 480);
 }
