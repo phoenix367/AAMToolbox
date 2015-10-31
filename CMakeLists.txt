@@ -42,6 +42,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${CMAKE_SOURCE_DIR}/cmake")
 
 set(CONTRIBUTE_DIRECTORY "${CMAKE_SOURCE_DIR}/contribute")
 set(DLIB_INCLUDE_DIRECTORY "${CONTRIBUTE_DIRECTORY}")
+set(TCLAP_INCLUDE_DIRECTORY "${CONTRIBUTE_DIRECTORY}/tclap/include")
 
 set(LIBRARY_OUTPUT_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 
@@ -67,6 +68,7 @@ file(GLOB AAM_SOURCES "${AAM_SOURCE_DIR}/*.h" "${AAM_SOURCE_DIR}/*.cpp")
 add_library(${AAM_LIBRARY_NAME} ${AAM_HEADERS} ${AAM_SOURCES})
 target_link_libraries(${AAM_LIBRARY_NAME} ${CMAKE_THREAD_LIBS_INIT} ${OpenCV_LIBS})
 
+include(${CMAKE_MODULE_PATH}/aamutils.cmake)
 if (BuildTests)
     include(${CMAKE_MODULE_PATH}/gtest.cmake)
 endif()
@@ -75,4 +77,6 @@ if(BuildTests)
     add_subdirectory(tests)
     add_test (NAME AAM_tests COMMAND aam-tests)
 endif()
+
+add_subdirectory(utils)
 
