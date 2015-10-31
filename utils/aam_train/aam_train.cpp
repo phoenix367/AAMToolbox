@@ -1,5 +1,5 @@
 /* Active Appearance Model toolbox
- * Copyright (C) 2012 Ivan Gubochkin
+ * Copyright (C) 2015 Ivan Gubochkin
  * e-mail: jhng@yandex.ru
  *
  *  This program is free software: you can redistribute it and/or modify
